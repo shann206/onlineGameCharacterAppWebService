@@ -32,7 +32,7 @@ app.get('/allcharacters', async(req, res) => {
     }
 })
 
-app.post('/addcharacter/', async(req, res) => {
+app.post('/addcharacter', async(req, res) => {
     const { game_name, character_name, character_img } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
