@@ -63,7 +63,7 @@ app.post('/deletecharacter/:id', async(req, res) => {
     try {
         let connection = await mysql.createConnection(dbConfig);
         await connection.execute('DELETE FROM game_character WHERE id = ?', [id])
-        res.status(201).json({message: 'Character with id'+id+' deleted successfully'});
+        res.status(201).json({message: 'Character with id '+id+' deleted successfully'});
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error - could not delete character with id'+id})
