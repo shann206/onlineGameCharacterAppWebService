@@ -36,7 +36,7 @@ app.post('/addcharacter/:id', async(req, res) => {
     const { game_name, character_name, character_img } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('INSERT INTO cards (game_name, character_name, character_img) VALUES (?,?,?)', [game_name, character_name, character_img]);
+        await connection.execute('INSERT INTO game_character (game_name, character_name, character_img) VALUES (?,?,?)', [game_name, character_name, character_img]);
         res.status(201).json({message: 'Character '+character_name+' added successfully'});
     } catch (err) {
         console.error(err);
