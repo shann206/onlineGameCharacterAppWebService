@@ -32,7 +32,7 @@ app.get('/allcharacters', async(req, res) => {
     }
 })
 
-app.post('/addcharacter', async(req, res) => {
+app.post('/addcharacter/:id', async(req, res) => {
     const { game_name, character_name, character_img } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
@@ -44,7 +44,7 @@ app.post('/addcharacter', async(req, res) => {
     }
 })
 
-app.post('/updatecharacter', async(req, res) => {
+app.post('/updatecharacter/:id', async(req, res) => {
     const id = req.params.id;
     const { game_name, character_name, character_img } = req.body;
     try {
