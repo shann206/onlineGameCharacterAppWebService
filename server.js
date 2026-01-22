@@ -44,28 +44,53 @@ app.post('/addcharacter', async(req, res) => {
     }
 })
 
-app.post('/updatecharacter/:id', async(req, res) => {
-    const id = req.params.id;
-    const { game_name, character_name, character_img } = req.body;
-    try {
-        let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('UPDATE game_character SET game_name = ?, character_name = ?, character_img = ? WHERE id = ?', [ game_name, character_name, character_img, id])
-        res.status(201).json({message: 'Character '+character_name+' updated successfully'});
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error - could not update character '+character_name})
-    }
-})
+// app.post('/updatecharacter/:id', async(req, res) => {
+//     const id = req.params.id;
+//     const { game_name, character_name, character_img } = req.body;
+//     try {
+//         let connection = await mysql.createConnection(dbConfig);
+//         await connection.execute('UPDATE game_character SET game_name = ?, character_name = ?, character_img = ? WHERE id = ?', [ game_name, character_name, character_img, id])
+//         res.status(201).json({message: 'Character '+character_name+' updated successfully'});
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: 'Server error - could not update character '+character_name})
+//     }
+// })
+//
+// app.post('/deletecharacter/:id', async(req, res) => {
+//     const id = req.params.id;
+//     const { game_name, character_name, character_img } = req.body;
+//     try {
+//         let connection = await mysql.createConnection(dbConfig);
+//         await connection.execute('DELETE FROM game_character WHERE id = ?', [id])
+//         res.status(201).json({message: 'Character with id '+id+' deleted successfully'});
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: 'Server error - could not delete character with id'+id})
+//     }
+// })
 
-app.post('/deletecharacter/:id', async(req, res) => {
-    const id = req.params.id;
+app.put('/updatecharacter/:id', async (req, res) => {
+    const { id } = req.params;
     const { game_name, character_name, character_img } = req.body;
-    try {
+    try{
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('DELETE FROM game_character WHERE id = ?', [id])
-        res.status(201).json({message: 'Character with id '+id+' deleted successfully'});
+        await connection.execute('UPDATE game_character SET game_name = ?, character_name = ?, character_img = ? WHERE id = ?', [ game_name, character_name, character_img, id]);
+        res.status(201).json({message: 'Character with id '+id+' updated successfully'});
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error - could not delete character with id'+id})
+        res.status(500).json({ message: 'Server error - could not update character with id '+ id});
     }
-})
+});
+
+app.delete('/deletecharacter/:id', async (req, res) => {
+    const { id } = req.params;
+    try{
+        let connection = await mysql.createConnection(dbConfig);
+        await connection.execute('DELETE FROM game_character WHERE id=?', [id]);
+        res.status(201).json({ message: 'Character with id ' + id + ' deleted successfully!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error - could not delete character with id '+id});
+    }
+});
