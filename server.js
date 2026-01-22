@@ -94,3 +94,5 @@ app.delete('/deletecharacter/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error - could not delete character with id '+id});
     }
 });
+
+//re-render
